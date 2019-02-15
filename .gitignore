@@ -1,0 +1,5 @@
+cluster.env
+kubedns
+root-cert.pem
+key.pem
+cert-chain.pem
