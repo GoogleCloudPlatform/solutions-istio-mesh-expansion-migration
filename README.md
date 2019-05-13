@@ -3,7 +3,10 @@
 This solution tutorial demonstrates how to use a service mesh, [Istio](https://istio.io/) to gradually migrate
 services from a "legacy" environment to a modern, cloud-native one.
 
-Please refer to the article for the steps to run the code: [Supporting Your Migration with Istio Mesh Expansion](http://).
+Please refer to the following articles for the steps to run the code:
+
+- [Tutorial](https://cloud.google.com/solutions/supporting-your-migration-with-istio-mesh-expansion-tutorial)
+- [Concept](https://cloud.google.com/solutions/supporting-your-migration-with-istio-mesh-expansion-concept)
 
 ## Contents of this repository
 
