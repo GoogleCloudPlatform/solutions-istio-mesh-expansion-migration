@@ -8,7 +8,20 @@ Please refer to the following articles for the steps to run the code:
 - [Tutorial](https://cloud.google.com/solutions/supporting-your-migration-with-istio-mesh-expansion-tutorial)
 - [Concept](https://cloud.google.com/solutions/supporting-your-migration-with-istio-mesh-expansion-concept)
 
+## Dependencies
+
+For this tutorial, you need the following tools:
+
+- A [POSIX](https://wikipedia.org/wiki/POSIX)-compliant shell.
+- [Google Cloud SDK](https://cloud.google.com/sdk) (tested with version `271.0.0`).
+- Terraform (tested with version `v0.15.0`), if you prefer provisioning the environment with Terraform.
+
 ## Contents of this repository
+
+### Terraform descriptors
+
+The [`terraform`](terraform) directory contains all the [Terraform](https://www.terraform.io/)
+descriptors to provision the resources for the tutorial.
 
 ### Example Workload
 
@@ -31,3 +44,21 @@ The [`kubernetes/bookinfo/istio`](kubernetes/bookinfo/istio) directory contains:
 
 - A Service to expose [KubeDNS](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/) so workloads not running in Kubernetes can resolve internal names
 - An Istio Gateway and VirtualService to expose Kiali (used to visualize the service mesh)
+
+## Provisioning the environment with Terraform
+
+If you prefer using Terraform to provision the environment for the tutorial, you:
+
+1. Change your working directory to the root of this repository.
+1. Initialize the default Google Cloud: `gcloud auth application-default login`
+1. Initialize Terraform: `scripts/init.sh`
+1. Change your working directory to the `terraform` directory: `cd terraform`
+1. Ensure the configuration is valid: `terraform validate`
+1. Apply the changes: `terraform apply`
+
+## Deploying workloads
+
+To deploy an example workload in the clusters you create:
+
+1. Change your working directory to the root of this repository.
+1. Deploy the workloads: `scripts/workloads.sh`

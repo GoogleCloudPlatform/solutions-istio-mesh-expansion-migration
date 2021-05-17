@@ -1,0 +1,2 @@
+# Ignoring these descriptors because they are dynamically generated
+docker-compose-*.yaml

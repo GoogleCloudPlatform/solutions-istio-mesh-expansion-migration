@@ -1,4 +1,4 @@
-# Copyright 2019 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,18 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: details
-spec:
-  hosts:
-  - "details"
-  http:
-    - route:
-      - destination:
-          host: details-gke.default.svc.cluster.local
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -30,22 +18,38 @@ metadata:
   name: productpage
 spec:
   hosts:
-  - "*"
+    - "*"
   gateways:
-  - bookinfo-gateway
+    - istio-system/default-gateway
   http:
-  - match:
-    - uri:
-        exact: /productpage
-    - uri:
-        exact: /login
-    - uri:
-        exact: /logout
-    - uri:
-        prefix: /api/v1/products
-    route:
-    - destination:
-        host: productpage-gke.default.svc.cluster.local
+    - match:
+        - uri:
+            exact: /productpage
+        - uri:
+            exact: /login
+        - uri:
+            exact: /logout
+        - uri:
+            prefix: /api/v1/products
+        - uri:
+            prefix: /static
+      route:
+        - destination:
+            host: productpage.default.svc.cluster.local
+...
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: details
+spec:
+  hosts:
+    - details
+  http:
+    - route:
+      - destination:
+          host: details.default.svc.cluster.local
+...
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -53,11 +57,12 @@ metadata:
   name: ratings
 spec:
   hosts:
-  - "ratings"
+    - ratings
   http:
     - route:
       - destination:
-          host: ratings-gke.default.svc.cluster.local
+          host: ratings.default.svc.cluster.local
+...
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -65,8 +70,9 @@ metadata:
   name: reviews
 spec:
   hosts:
-  - "reviews"
+    - reviews
   http:
     - route:
       - destination:
-          host: reviews-gke.default.svc.cluster.local
+          host: reviews.default.svc.cluster.local
+...

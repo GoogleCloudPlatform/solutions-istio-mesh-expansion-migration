@@ -11,35 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: ratings-gke
-  labels:
-    app: ratings
-spec:
-  ports:
-  - port: 9080
-    name: http
-  selector:
-    app: ratings
 ---
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: ratings-v1
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: ratings
-        version: v1
-    spec:
-      containers:
-      - name: ratings
-        image: istio/examples-bookinfo-ratings-v1:1.10.0
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 9080
+version: '3'
+services:
+  ${BOOKINFO_COMPONENT_NAME}:
+    environment:
+      - DETAILS_HOSTNAME=source-environment-details
+      - RATINGS_HOSTNAME=source-environment-ratings
+      - REVIEWS_HOSTNAME=source-environment-reviews
+      - SERVICES_DOMAIN=${BOOKINFO_COMPONENT_INSTANCE_ZONE}.c.${BOOKINFO_COMPONENT_PROJECT_ID}.internal
+    expose:
+      - "9080"
+    image: ${BOOKINFO_COMPONENT_CONTAINER_IMAGE_TAG}
+    network_mode: "host"
+...

@@ -1,4 +1,4 @@
-# Copyright 2019 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,18 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: ratings
-spec:
-  hosts:
-  - "ratings"
-  http:
-    - route:
-      - destination:
-          host: ratings-gke.default.svc.cluster.local
-        weight: 50
-      - destination:
-          host: ratings.default.svc.cluster.local
-        weight: 50
+# Ignore all files in this dir...
+*
+
+# ... except for this one.
+!.gitignore

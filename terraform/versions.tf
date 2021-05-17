@@ -1,4 +1,4 @@
-# Copyright 2019 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,29 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: productpage
-spec:
-  hosts:
-  - "*"
-  gateways:
-  - bookinfo-gateway
-  http:
-  - match:
-    - uri:
-        exact: /productpage
-    - uri:
-        exact: /login
-    - uri:
-        exact: /logout
-    - uri:
-        prefix: /api/v1/products
-    route:
-    - destination:
-        host: productpage-gke.default.svc.cluster.local
-      weight: 50
-    - destination:
-        host: productpage.default.svc.cluster.local
-      weight: 50
+terraform {
+  required_version = ">= 0.13"
+
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 3.72.0"
+    }
+    google-beta = {
+      source  = "hashicorp/google-beta"
+      version = "~> 3.72.0"
+    }
+  }
+}

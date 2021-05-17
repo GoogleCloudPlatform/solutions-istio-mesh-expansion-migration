@@ -11,26 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+---
+resources:
+  - grafana.yaml
+  - virtual-service.yaml
 
-# Ignore the Terraform state directory
-*/**/.terraform
-
-# Ignore the tfvars files because it's dynamically generated and might contain sensitive information
-terraform.tfvars
-
-# Ignore local Terraform state
-*.tfstate*
-
-# Exclude artifacts that we download
-*.tar.gz
-istio-*/
-
-# Exclude dynamically generated Istio configuration files
-cluster.env
-kubedns
-root-cert.pem
-key.pem
-cert-chain.pem
-
-# Ignore log files
-*.log
+patchesStrategicMerge:
+  - reverse-proxy-config.yaml
+...

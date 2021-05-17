@@ -1,4 +1,4 @@
-# Copyright 2019 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,18 +11,25 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+---
 apiVersion: networking.istio.io/v1alpha3
-kind: Gateway
+kind: VirtualService
 metadata:
-  name: bookinfo-gateway
+  name: kiali
+  namespace: istio-system
 spec:
-  selector:
-    istio: ingressgateway # use Istio default gateway implementation
-  servers:
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
+  hosts:
     - "*"
+  gateways:
+    - default-gateway
+  http:
+    - name: "kiali-routes"
+      match:
+        - uri:
+            prefix: "/kiali"
+      route:
+        - destination:
+            host: kiali.istio-system.svc.cluster.local
+            port:
+              number: 20001
+...
