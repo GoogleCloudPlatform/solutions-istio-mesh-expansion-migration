@@ -1,0 +1,2 @@
+# Ignoring this descriptor because we copy it from the Istio distribution
+grafana.yaml

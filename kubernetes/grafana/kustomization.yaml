@@ -1,0 +1,8 @@
+---
+resources:
+  - grafana.yaml
+  - virtual-service.yaml
+
+patchesStrategicMerge:
+  - reverse-proxy-config.yaml
+...

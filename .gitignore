@@ -3,3 +3,16 @@ kubedns
 root-cert.pem
 key.pem
 cert-chain.pem
+
+# Ignore the Terraform state directory
+*/**/.terraform
+
+# Ignore the tfvars files because it's dynamically generated and might contain sensitive information
+terraform.tfvars
+
+# Ignore local Terraform state
+*.tfstate
+*.tfstate.backup
+
+*.tar.gz
+istio-*

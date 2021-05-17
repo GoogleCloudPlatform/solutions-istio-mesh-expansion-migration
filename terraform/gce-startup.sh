@@ -26,13 +26,12 @@ apt-get install -y docker-ce
 # get latest docker compose released tag
 COMPOSE_VERSION="$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d\" -f4)"
 
+echo "Installing Docker Compose ${COMPOSE_VERSION}"
 curl -L https://github.com/docker/compose/releases/download/"${COMPOSE_VERSION}"/docker-compose-"$(uname -s)"-"$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 
-# Bypass systemd-resolved
-# Workaround for https://github.com/systemd/systemd/issues/9833
-# The issue has been fixed but a new systemd version has not been
-# released yet
-rm /etc/resolv.conf
-ln -s /run/resolvconf/resolv.conf /etc/resolv.conf
-systemctl restart resolvconf
+# If you change the Istio version, ensure to update the Istio installation script as well
+ISTIO_VERSION="1.10.0"
+echo "Installing Istio ${ISTIO_VERSION} integration runtime..."
+curl -LO https://storage.googleapis.com/istio-release/releases/"${ISTIO_VERSION}"/deb/istio-sidecar.deb
+dpkg -i istio-sidecar.deb

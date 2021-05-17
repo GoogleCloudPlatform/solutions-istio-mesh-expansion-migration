@@ -1,0 +1,11 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: WorkloadGroup
+metadata:
+  name: "bookinfo"
+spec:
+  metadata:
+    labels:
+      app: "bookinfo"
+  template:
+    serviceAccount: "bookinfo-gce"
+    network: ""

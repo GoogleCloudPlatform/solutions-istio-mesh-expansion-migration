@@ -11,20 +11,20 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-apiVersion: v1
-kind: Service
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
 metadata:
-  name: kube-dns-ilb
-  namespace: kube-system
-  annotations:
-    cloud.google.com/load-balancer-type: "internal"
-  labels:
-    k8s-app: kube-dns
+  name: default-gateway
+  namespace: istio-system
 spec:
-  type: LoadBalancer
-  ports:
-  - port: 53
-    protocol: UDP
   selector:
-    k8s-app: kube-dns
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+...

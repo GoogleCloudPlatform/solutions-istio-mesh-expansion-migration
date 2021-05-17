@@ -1,0 +1,17 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  namespace: istio-system
+spec:
+  template:
+    spec:
+      containers:
+        - name: grafana
+          env:
+            - name: "GF_SERVER_ROOT_URL"
+              value: "%(protocol)s://%(domain)s/grafana/"
+            - name: "GF_SERVER_SERVE_FROM_SUB_PATH"
+              value: "true"
+...
