@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-# Copyright 2019 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,25 +14,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+set -o nounset
+set -o errexit
+
 apt-get update
 
 # Docker installation
-apt-get install -y apt-transport-https ca-certificates curl dnsmasq resolvconf software-properties-common
+apt-get install -y apt-transport-https
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 add-apt-repository  "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 apt-get update
 apt-get install -y docker-ce
 
-# get latest docker compose released tag
-COMPOSE_VERSION="$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d\" -f4)"
-
-curl -L https://github.com/docker/compose/releases/download/"${COMPOSE_VERSION}"/docker-compose-"$(uname -s)"-"$(uname -m)" -o /usr/local/bin/docker-compose
+# Ignoring SC2154 because this variable comes from Terraform
+# shellcheck disable=SC2154
+echo "Installing Docker Compose ${docker_compose_version}"
+curl -L https://github.com/docker/compose/releases/download/"${docker_compose_version}"/docker-compose-"$(uname -s)"-"$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 
-# Bypass systemd-resolved
-# Workaround for https://github.com/systemd/systemd/issues/9833
-# The issue has been fixed but a new systemd version has not been
-# released yet
-rm /etc/resolv.conf
-ln -s /run/resolvconf/resolv.conf /etc/resolv.conf
-systemctl restart resolvconf
+# Ignoring SC2154 because this variable comes from Terraform
+# shellcheck disable=SC2154
+echo "Installing Istio ${istio_version} integration runtime..."
+curl -LO https://storage.googleapis.com/istio-release/releases/"${istio_version}"/deb/istio-sidecar.deb
+dpkg -i istio-sidecar.deb

@@ -1,4 +1,4 @@
-# Copyright 2019 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,35 +11,20 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: details-gke
-  labels:
-    app: details
-spec:
-  ports:
-  - port: 9080
-    name: http
-  selector:
-    app: details
 ---
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
 metadata:
-  name: details-v1
+  name: default-gateway
+  namespace: istio-system
 spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: details
-        version: v1
-    spec:
-      containers:
-      - name: details
-        image: istio/examples-bookinfo-details-v1:1.10.0
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 9080
+  selector:
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+...

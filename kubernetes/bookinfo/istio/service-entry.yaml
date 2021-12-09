@@ -1,4 +1,4 @@
-# Copyright 2019 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,35 +12,38 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: networking.istio.io/v1alpha3
-kind: Gateway
-metadata:
-  name: kiali-gateway
-  namespace: istio-system
-spec:
-  selector:
-    istio: ingressgateway # use Istio default gateway implementation
-  servers:
-  - port:
-      number: 15029
-      name: http-kiali
-      protocol: HTTP
-    hosts:
-    - "*"
 ---
 apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
+kind: ServiceEntry
 metadata:
-  name: kiali
-  namespace: istio-system
+  name: allowlist-egress-googleapis
 spec:
   hosts:
-  - "*"
-  gateways:
-  - kiali-gateway
-  http:
-  - match:
-    - port: 15029
-    route:
-    - destination:
-        host: kiali.istio-system.svc.cluster.local
+    - "accounts.google.com"
+    - "*.googleapis.com"
+  ports:
+    - number: 80
+      protocol: HTTP
+      name: http
+    - number: 443
+      protocol: HTTPS
+      name: https
+...
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: allowlist-egress-google-metadata
+spec:
+  hosts:
+    - metadata.google.internal
+  addresses:
+    - 169.254.169.254 # GCE metadata server
+  ports:
+    - number: 80
+      name: http
+      protocol: HTTP
+    - number: 443
+      name: https
+      protocol: HTTPS
+...
