@@ -39,7 +39,7 @@ resource "google_project_iam_member" "compute_viewer" {
 }
 
 resource "google_compute_instance" "source-environment-instance" {
-  #ts:skip=accurics.gcp.NS.125 Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
+  #ts:skip=AC_GCP_0041 Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
   for_each = toset(["productpage", "details", "ratings", "reviews"])
 
   name         = "source-environment-${each.key}"

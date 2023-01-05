@@ -119,7 +119,6 @@ while true; do
     # Ignoring because those are defined in common.sh, and don't need quotes
     # shellcheck disable=SC2086
     exit ${EXIT_OK}
-    break
     ;;
   esac
 done
@@ -178,11 +177,11 @@ if [ "${DEPLOY_WITH}" = "${COMPOSE_SELECTOR}" ]; then
     gcloud compute scp \
       "${COMPONENT_COMPOSE_DESCRIPTOR_PATH}" \
       "${COMPONENT_COMPUTE_ENGINE_INSTANCE_NAME}":"${COMPOSE_DESCRIPTOR_DESTINATION_PATH}"
-    
+
     echo "Waiting for Docker Compose to be available in the ${COMPONENT_COMPUTE_ENGINE_INSTANCE_NAME} instance..."
     gcloud compute ssh "${COMPONENT_COMPUTE_ENGINE_INSTANCE_NAME}" \
       --command='while ! command -v docker-compose; do echo "Waiting for docker-compose to be installed"; sleep 5; done'
-    
+
     echo "Deploying the workload to the ${COMPONENT_COMPUTE_ENGINE_INSTANCE_NAME} instance..."
     gcloud compute ssh "${COMPONENT_COMPUTE_ENGINE_INSTANCE_NAME}" \
       --command="sudo docker-compose -f ${COMPOSE_DESCRIPTOR_DESTINATION_PATH} up --detach --remove-orphans"
@@ -249,7 +248,7 @@ if [ "${EXPOSE_WITH}" = "${ISTIO_GCE_DESCRIPTOR}" ]; then
 
   echo "Deploying ServiceEntries in the ${SERVICE_NAMESPACE} to allow traffic to the Compute Engine metadata server and to Google Cloud APIs..."
   kubectl apply -f "${TUTORIAL_KUBERNETES_DESCRIPTORS_PATH}"/bookinfo/istio/service-entry.yaml -n "${SERVICE_NAMESPACE}"
-  
+
   echo "Deploying VirtualServices in the ${SERVICE_NAMESPACE} to allow routing traffic to the workloads running in the Compute Engine instance..."
   kubectl apply -f "${TUTORIAL_KUBERNETES_DESCRIPTORS_PATH}"/bookinfo/istio/virtualservice-vm.yaml -n "${SERVICE_NAMESPACE}"
 
