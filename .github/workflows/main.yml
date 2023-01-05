@@ -14,7 +14,6 @@ jobs:
           ERROR_ON_MISSING_EXEC_BIT: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: true
-          VALIDATE_JSCPD_ALL_CODEBASE: true
           VALIDATE_KUBERNETES_KUBEVAL: false
 
   terraform:
