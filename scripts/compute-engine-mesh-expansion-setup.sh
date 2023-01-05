@@ -97,7 +97,6 @@ while true; do
     # Ignoring because those are defined in common.sh, and don't need quotes
     # shellcheck disable=SC2086
     exit ${EXIT_OK}
-    break
     ;;
   esac
 done
@@ -157,7 +156,7 @@ for component in ${BOOKINFO_COMPONENTS}; do
   gcloud compute scp --recurse \
     "${MESH_EXPANSION_CONFIG_DIRECTORY_SOURCE_PATH}" \
     "${COMPONENT_COMPUTE_ENGINE_INSTANCE_NAME}":"${MESH_EXPANSION_ROOT_CONFIG_DESTINATION_PATH}"
-  
+
   echo "Placing Istio configuration files in the expected places on the ${COMPONENT_COMPUTE_ENGINE_INSTANCE_NAME} instance..."
   gcloud compute ssh "${COMPONENT_COMPUTE_ENGINE_INSTANCE_NAME}" \
     --command="sudo mkdir -p /etc/certs \
@@ -168,7 +167,7 @@ for component in ${BOOKINFO_COMPONENTS}; do
       && sudo cp ${MESH_EXPANSION_CONFIG_DESTINATION_PATH}/mesh.yaml /etc/istio/config/mesh \
       && sudo mkdir -p /etc/istio/proxy \
       && sudo chown -R istio-proxy /var/lib/istio /etc/certs /etc/istio/proxy /etc/istio/config /var/run/secrets /etc/certs/root-cert.pem"
-  
+
   echo "Adding the istiod host to /etc/hosts on the ${COMPONENT_COMPUTE_ENGINE_INSTANCE_NAME} instance..."
   # Ignoring because we want the substituiton to happen in the target shell
   # shellcheck disable=SC2016

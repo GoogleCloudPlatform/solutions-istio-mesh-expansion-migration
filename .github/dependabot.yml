@@ -1,3 +1,4 @@
+---
 version: 2
 updates:
   - directory: "/"
@@ -9,3 +10,4 @@ updates:
     directory: "/terraform"
     schedule:
       interval: "daily"
+...
