@@ -31,7 +31,7 @@ locals {
 
 module "kubernetes-engine" {
   source  = "terraform-google-modules/kubernetes-engine/google"
-  version = "26.0.0"
+  version = "26.1.0"
 
   create_service_account     = true
   horizontal_pod_autoscaling = true
