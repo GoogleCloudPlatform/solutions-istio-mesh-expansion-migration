@@ -19,3 +19,7 @@ trim_trailing_whitespace = true
 # Give operators breathing room, but not brackets
 spaces_around_operators = true
 spaces_around_brackets = false
+
+# Don't check indentation for those pre-formatted files
+[LICENSE]
+indent_size = unset

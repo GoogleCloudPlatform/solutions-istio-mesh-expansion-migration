@@ -33,9 +33,9 @@ spec:
     successThreshold: 3
     failureThreshold: 3
     httpGet:
-     path: /
-     port: 9080
-     scheme: HTTP
+      path: /
+      port: 9080
+      scheme: HTTP
   template:
     labels:
       app: ${BOOKINFO_COMPONENT_NAME}
