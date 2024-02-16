@@ -1,0 +1,117 @@
+{
+    "failed_checks": [
+        {
+            "file": "/kubernetes/grafana/reverse-proxy-config.yaml",
+            "findings": [
+                {
+                    "resource": "Deployment.istio-system.grafana",
+                    "check_ids": [
+                        "CKV_K8S_10",
+                        "CKV_K8S_11",
+                        "CKV_K8S_12",
+                        "CKV_K8S_13",
+                        "CKV_K8S_14",
+                        "CKV_K8S_15",
+                        "CKV_K8S_20",
+                        "CKV_K8S_22",
+                        "CKV_K8S_23",
+                        "CKV_K8S_28",
+                        "CKV_K8S_29",
+                        "CKV_K8S_30",
+                        "CKV_K8S_31",
+                        "CKV_K8S_33",
+                        "CKV_K8S_37",
+                        "CKV_K8S_38",
+                        "CKV_K8S_40",
+                        "CKV_K8S_43",
+                        "CKV_K8S_8",
+                        "CKV_K8S_9"
+                    ]
+                }
+            ]
+        },
+        {
+            "file": "/kubernetes/mesh-expansion/gce-service-account.yaml",
+            "findings": [
+                {
+                    "resource": "ServiceAccount.default.bookinfo-gce",
+                    "check_ids": [
+                        "CKV_K8S_21"
+                    ]
+                }
+            ]
+        },
+        {
+            "file": "/terraform/main.tf",
+            "findings": [
+                {
+                    "resource": "kubernetes-engine",
+                    "check_ids": [
+                        "CKV_TF_1"
+                    ]
+                }
+            ]
+        },
+        {
+            "file": "/terraform/network.tf",
+            "findings": [
+                {
+                    "resource": "google_compute_subnetwork.tutorial-subnet",
+                    "check_ids": [
+                        "CKV_GCP_26",
+                        "CKV_GCP_74",
+                        "CKV_GCP_76"
+                    ]
+                }
+            ]
+        },
+        {
+            "file": "/terraform/source-environment.tf",
+            "findings": [
+                {
+                    "resource": "google_compute_instance.source-environment-instance[\"details\"]",
+                    "check_ids": [
+                        "CKV_GCP_32",
+                        "CKV_GCP_38",
+                        "CKV_GCP_40"
+                    ]
+                },
+                {
+                    "resource": "google_compute_instance.source-environment-instance[\"productpage\"]",
+                    "check_ids": [
+                        "CKV_GCP_32",
+                        "CKV_GCP_38",
+                        "CKV_GCP_40"
+                    ]
+                },
+                {
+                    "resource": "google_compute_instance.source-environment-instance[\"ratings\"]",
+                    "check_ids": [
+                        "CKV_GCP_32",
+                        "CKV_GCP_38",
+                        "CKV_GCP_40"
+                    ]
+                },
+                {
+                    "resource": "google_compute_instance.source-environment-instance[\"reviews\"]",
+                    "check_ids": [
+                        "CKV_GCP_32",
+                        "CKV_GCP_38",
+                        "CKV_GCP_40"
+                    ]
+                }
+            ]
+        },
+        {
+            "file": "/terraform/tutorial-project.tf",
+            "findings": [
+                {
+                    "resource": "google_project.tutorial_project",
+                    "check_ids": [
+                        "CKV2_GCP_5"
+                    ]
+                }
+            ]
+        }
+    ]
+}
